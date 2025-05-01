@@ -12,10 +12,12 @@ kalkulator.forEach(item => {
 const items = document.querySelectorAll('.item');
 display.textContent = '0';
 let inputNum = '';
+let number = '';
 let firstNum = null;
 let secondNum = null;
 let operator = '';
 let result = 0;
+
 
 
 container.addEventListener('click', (e) => {
@@ -26,12 +28,13 @@ container.addEventListener('click', (e) => {
     if (item && target === 'C') {
         clear();
     } else if (item && target === '=') {
-        secondNum = parseFloat(inputNum);
+        secondNum = parseFloat(number);
+
         if (firstNum !== null && secondNum !== null) {
-            let result = calculate(firstNum, secondNum, operator)
-            console.log(`ini adalah result ${result} `);
+            result = calculate(firstNum, secondNum, operator)
+
             display.textContent = result
-            inputNum = result.toString();
+            number = result.toString();
             firstNum = null;
             secondNum = null;
             operator = '';
@@ -39,23 +42,24 @@ container.addEventListener('click', (e) => {
 
     }
     else if (item && operators.includes(target)) {
-        if (inputNum !== '') {
-            firstNum = parseFloat(inputNum);
-            console.log(`ini adalah firstNum ${firstNum} `);
-
+        if (number !== '') {
+            firstNum = parseFloat(number);
             operator = target === 'x' ? '*' : target;
-            inputNum = ''
+            number = ''
+            result = 0;
             display.textContent = firstNum + ' ' + target
-            console.log(`ini adalah opetaror ${operator} `);
         }
     } else if (item && target) {
-        if (inputNum === '') {
-            inputNum += target
-            display.textContent = inputNum
+        if (result === 0) {
+            console.log(result);
+            inputNum = target
+            number += inputNum;
+            inputNum = ''
+            display.textContent = number
         } else {
             clear();
-            inputNum += target
-            display.textContent = inputNum
+            number += target
+            display.textContent = number
 
         }
     }
@@ -83,5 +87,6 @@ function clear() {
     secondNum = null;
     operator = '';
     result = 0;
+    number = ''
 
 }
